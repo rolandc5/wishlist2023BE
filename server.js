@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const Schema = mongoose.Schema;
 const server = express();
+const port = process.env.PORT || 8080;
 server.use(express.json());
 server.use(cors());
 
@@ -66,6 +67,6 @@ server.put('/updateList', async(req, res) => {
   }
 })
 
-server.listen(3030, () => {
+server.listen(port, () => {
   console.log('server is running on port 3030');
 });
