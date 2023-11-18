@@ -14,7 +14,7 @@ const url = process.env.MONGO_URI;
 
 const mongooseConnect = async () => {
   try {
-    await mongoose.connect('mongodb+srv://rolandc5:maxx2006@cluster0.xqsv9bq.mongodb.net/?retryWrites=true&w=majority');
+    await mongoose.connect(url);
     console.log("Connected to Mongo DB");
   } catch (err) {
     console.log(err);
