@@ -1,14 +1,14 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-
-const Schema = mongoose.Schema;
-const server = express();
-const port = process.env.PORT || 8080;
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
 const dotenv = require("dotenv")
-dotenv.config();
-server.use(express.json());
-server.use(cors());
+dotenv.config()
+const app = express();
+const port = process.env.PORT || 8080;
+app.use(express.json());
+app.use(cors());
+
+const { Schema } = mongoose;
 
 const url = process.env.MONGO_URI;
 
@@ -36,11 +36,11 @@ const ItemSchema = new Schema(
 
 const Item = mongoose.model('ItemSchema', ItemSchema);
 
-server.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('this is a server');
 });
 
-server.post('/create', async (req, res) => {
+app.post('/create', async (req, res) => {
   try {
     const body = req.body;
     const item = new Item();
@@ -58,7 +58,7 @@ server.post('/create', async (req, res) => {
   }
 })
 
-server.get('/getList', async (req, res) => {
+app.get('/getList', async (req, res) => {
   try {
     const retrieved = await Item.find({});
     res.status(200).send(retrieved);
@@ -67,7 +67,7 @@ server.get('/getList', async (req, res) => {
   }
 })
 
-server.put('/updateList', async (req, res) => {
+app.put('/updateList', async (req, res) => {
   try {
     const updated = req.body;
     const item = Item.findOneById(updated.id);
@@ -79,6 +79,6 @@ server.put('/updateList', async (req, res) => {
   }
 })
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log('server is running on port 3030');
 });
