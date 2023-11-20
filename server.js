@@ -73,7 +73,6 @@ app.put('/updateList', async (req, res) => {
     const item = await Item.findById(updated.id);
     item.bought = updated.bought;
     const saved = await item.save();
-    console.log(saved);
     res.status(200).send(saved);
   } catch (err) {
     console.log(err);
