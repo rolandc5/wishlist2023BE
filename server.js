@@ -6,7 +6,7 @@ dotenv.config()
 const app = express();
 const port = process.env.PORT || 8080;
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: true}));
 
 const { Schema } = mongoose;
 
@@ -70,15 +70,17 @@ app.get('/getList', async (req, res) => {
 app.put('/updateList', async (req, res) => {
   try {
     const updated = req.body;
-    const item = Item.findOneById(updated.id);
+    const item = await Item.findById(updated.id);
     item.bought = updated.bought;
-    const saved = item.save();
+    const saved = await item.save();
+    console.log(saved);
     res.status(200).send(saved);
   } catch (err) {
+    console.log(err);
     res.status(400).send('error');
   }
 })
 
 app.listen(port, () => {
-  console.log('server is running on port 3030');
+  console.log('server is running on port 8080');
 });
